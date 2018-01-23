@@ -14,6 +14,7 @@ done
 printf  "\n\nCP-Server-Backup \n"
 path=/backup1/criticalserverbackup/hsphere
 
+
 for i in  cp1 cp1/DB cp2 cp2/DB
 do
 cd $path/$i
