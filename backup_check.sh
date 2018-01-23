@@ -35,7 +35,7 @@ done
 printf  "\n\nVPS-Backup \n\n"
 path=/backup6/vpsbackup
 
-for i in `ssh root@202.53.73.150 -p5040 vzlist -o ctid |grep -v CTID`
+for i in `ssh root@vps -p5040 vzlist -o ctid |grep -v CTID`
 do
 cd $path/
 file=$(ls -Art |grep $i| tail -n 1)
