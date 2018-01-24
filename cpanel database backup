@@ -1,0 +1,19 @@
+#cron entry in root user
+
+35 22 * * * su - cpanel -c /backup/cpdb/backup1.sh 2> /backup/cpdb/error
+
+# script location /backup/cpdb/backup1.sh
+
+
+#!/bin/sh
+
+cd /backup/cp1/db
+
+/usr/bin/pg_dumpall -i | gzip  > postgres.dump.gz.new || exit 1
+
+rm -f postgres.dump.gz.4
+mv postgres.dump.gz.3  postgres.dump.gz.4
+mv postgres.dump.gz.2  postgres.dump.gz.3
+mv postgres.dump.gz.1  postgres.dump.gz.2
+mv postgres.dump.gz.new    postgres.dump.gz.1
+scp -P ###  postgres.dump.gz.1 root@backupserver_IP:/backup1/criticalserverbackup/hsphere/cp1/DB/dump_`date -I`.sql.gz
