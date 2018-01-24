@@ -1,0 +1,24 @@
+Cron Entry
+00 02 * * * /backup/filesbak/backupmove.sh 2> /backup/filesbak/error
+
+Location /backup/filesbak/backupmove.sh
+
+ts=$(date +%d_%m_%Y)
+cd /backup/cp1/files/
+mkdir $ts
+cd $ts
+
+tar -zcf shiva_psoftconfig.tar.gz /hsphere/local/home/cpanel/shiva/psoft_config/
+tar -zcf Sitestudio_psoftconfig.tar.gz /hsphere/shared/SiteStudio/psoft_config/
+tar -zcf apache_etc.tar.gz /hsphere/local/home/cpanel/apache/etc/
+tar -zcf template_images.tar.gz /hsphere/local/home/cpanel/shiva/shiva-templates/IMAGES
+tar -zcf shiva_custom.tar.gz /hsphere/local/home/cpanel/shiva/custom
+tar -zcf SS_varwebsites.tar.gz /hsphere/shared/SiteStudio/var/websites
+tar -zcf cpanelkb.tar.gz /hsphere/local/home/cpanel/.kb/
+tar -zcf cpanelattacments.tar.gz /hsphere/local/home/cpanel/.attachments/
+
+tar -zcf webinfclassescustom.tar.gz /hsphere/local/home/cpanel/hsphere/WEB-INF/classes/psoft_config/
+tar -zcf webinfclasses_psoftconfig.tar.gz /SiteStudio/studio/WEB-INF/classes/psoft_config/
+tar -zcf webinfshivatempimages.tar.gz /hsphere/local/home/cpanel/hsphere/WEB-INF/classes/custom/
+
+rsync -avz /backup/cp1/files/$ts -e "ssh -p ###" root@BACKUPSERVER_IP:/backup1/criticalserverbackup/hsphere/cp1/
